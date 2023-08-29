@@ -40,9 +40,21 @@ class Veiculo:
     def aumenta_valor(self, aumento):
         self.valor += aumento
 
+    def compara_valor(self, outro_veiculo):
+        if self.valor > outro_veiculo.valor:
+            return f"O veículo {self.modelo} é mais caro."
+        elif self.valor < outro_veiculo.valor:
+            return f"O veículo {outro_veiculo.modelo} é mais caro."
+        else:
+            return "Os veículos têm o mesmo valor."
 
-
-
+    def compara_valor_2(self, outro_veiculo):
+        if self.valor > outro_veiculo.valor:
+            return self.retorna_dados()
+        elif self.valor < outro_veiculo.valor:
+            return outro_veiculo.retorna_dados()
+        else:
+            return "Os veículos têm o mesmo valor."
 
 
 
