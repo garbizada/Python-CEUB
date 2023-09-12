@@ -1,13 +1,26 @@
 class Produto(object):
+    qtd_produto = 0
+    produtos = []
+
+    @classmethod
+    def get_qtd_produto(cls):
+        return cls.qtd_produto
+
     def __init__(self, nome, vlr_compra = 0, vlr_venda = 0, qtd_estoque = 0, qtd_minima = 0):
         self.nome = nome
         self.vlr_compra = vlr_compra
         self.vlr_venda = vlr_venda
         self.qtd_estoque = qtd_estoque
         self.qtd_minima = qtd_minima
+        type(self).qtd_produto += 1
+        Produto.produtos.append(self)
 
-    def qtd_produtos(self):
-        return len(Produto)
+    
+    @classmethod
+    def mostra_produtos(cls):
+        print("Nome de todos os produtos: ")
+        for objeto in Produto.produtos:
+            print(f"- {objeto.get_nome()}")
 
         
 
@@ -16,7 +29,7 @@ class Produto(object):
     
     def set_nome(self, novo_nome):
         if isinstance(novo_nome, str):
-            self._nome = novo_nome
+            self.nome = novo_nome
         else: 
             print("Erro: Nome não contém número")
 
@@ -47,7 +60,7 @@ class Produto(object):
     
     
     def __str__(self):
-        s = f"{self.nome},{self.peso},{self.anonascimento}"
+        s = f"{self.nome},{self.vlr_compra},{self.qtd_estoque}"
         return s 
 
 
@@ -57,11 +70,12 @@ class Produto(object):
 
     def atualiza_estoque(self):
         qtd_vendida = int(input("Digite a quantidade de produtos vendidos: "))
-        atualiza_estoque = self.qtd_estoque - qtd_vendida
+        self.qtd_estoque -= qtd_vendida
     
     def repor_produto(self):
         qtd_comprada = int(input("Digite a quantidade de produtos comprados: "))
-        repor_produto = self.qtd_estoque + qtd_comprada
+        self.qtd_estoque += qtd_comprada
+
 
     def alerta_estoque(self):
         if self.qtd_estoque < self.qtd_minima:
@@ -88,6 +102,8 @@ class Produto(object):
 
 if __name__ == "__main__":
 
+    
+
     produto1 = Produto("Arroz", 15, 25, 500, 100)
     print("Nome do produto: ",produto1.get_nome())
     print("A quantidade de produtos no estoque é: ",produto1.get_qtd_estoque())
@@ -111,7 +127,10 @@ if __name__ == "__main__":
 
     print(produto1.maior_lucro(produto2))
     
-    print(Produto.len(Produto))
+    print("A quantidade total de produtos é: ",Produto.get_qtd_produto())
+    Produto.mostra_produtos()
+    
+
 
 
     
