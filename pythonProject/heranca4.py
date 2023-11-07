@@ -1,7 +1,18 @@
+
+
 class Conta(object):                    # Superclasse
+    qtd_conta = 0
+    @classmethod
+    def get_qtd_conta(cls):
+        return cls.qtd_conta
+
+   
+
     def __init__(self, nome, saldo):  # Construtor  com default
         self.nome = nome                # Atributos de instância (objeto)
         self.saldo = saldo
+        Conta.qtd_conta += 1
+
 
     def get_nome(self):                 # Consulta
         return self.nome
@@ -19,8 +30,22 @@ class Conta(object):                    # Superclasse
     def deposito(self, valor):          # Métodos funcionais
         self.saldo += valor             # self.saldo = self.saldo + valor
 
-    def retirada(self, valor):          # Sem RN (Regra de Negócio)
-        self.saldo -= valor             # self.saldo = self.saldo - valor
+    def retirada(self, valor): 
+        nome_classe = self.__class__.__name__
+        if nome_classe == 'Conta_PF':
+            total = valor + 2
+        else:
+            total = valor + 5
+
+        valor_retirada = int(input("Digite o saldo que quer retirar"))        
+        if valor_retirada > self.saldo:
+            print('Não é possivel retirar uma quantidade que não e possuida')
+
+        elif valor_retirada > 0 :
+            self.saldo = self.saldo - valor_retirada
+
+        else:
+            print('Não é possivel retirar um valor negativo')          # self.saldo = self.saldo - valor
 
 
 
@@ -73,6 +98,17 @@ if __name__ == '__main__':
 
     cpj1 = Conta_PJ('Caue', 1000000000, '' , '500993090009')
     cpj2 = Conta_PJ('Cortex', 1000000000)
+
+
+    cpf2.retirada(5000)
+    cpj2.retirada(9000)
+
+    print(cpf2.get_saldo())
+    print(cpj2.get_saldo())
+
+    print( Conta.get_qtd_conta())
+
+
 
 
 
